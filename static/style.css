@@ -1,0 +1,464 @@
+/* ----------------------------
+   GLOBAL RESET & BASE
+-----------------------------*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Poppins", "Inter", "Segoe UI", Tahoma, sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 40px;
+  font-size: 1rem;
+  overflow-x: hidden;
+}
+
+/* ----------------------------
+   HEADER
+-----------------------------*/
+header {
+  background: linear-gradient(135deg, #007bff, #00bfa6);
+  color: white;
+  text-align: center;
+  padding: 35px 20px 45px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+header h1 {
+  font-size: clamp(1.3rem, 5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  justify-content: center;
+  line-height: 1.3;
+}
+
+header h1 i {
+  font-size: 1.4rem;
+}
+
+header p {
+  margin-top: 10px;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  opacity: 0.9;
+}
+
+/* ----------------------------
+   MAIN CONTAINER
+-----------------------------*/
+.container {
+  width: 92%;
+  max-width: 1000px; /* Increased for GIF + form + GIF layout */
+  margin: -25px auto 60px;
+  background: #ffffff;
+  padding: clamp(20px, 5vw, 40px);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.container:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ----------------------------
+   HEADINGS
+-----------------------------*/
+h2,
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #007bff;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+}
+
+/* ----------------------------
+   FORM + GIF WRAPPER
+-----------------------------*/
+.form-gif-wrapper {
+  display: flex;
+  align-items: stretch; /* Aligns GIFs and form vertically (top-to-bottom) */
+  justify-content: space-between; /* Pushes left GIF left, right GIF right, form centers */
+  gap: 25px; /* Space between elements */
+  flex-wrap: wrap; /* Allows stacking on small screens */
+  margin-top: 20px;
+}
+
+.gif-side {
+  flex: 0 0 180px; /* Fixed width, no grow/shrink */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 180px; /* Prevents overflow */
+}
+
+.gif-side img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px; /* Rounded corners for fun */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  animation: bounce 1.5s infinite ease-in-out; /* Your bounce animation */
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.left-gif {
+  /* Optional: Mirror or specific left styling if needed */
+}
+
+.right-gif {
+  /* Optional: Specific right styling if needed */
+}
+
+/* ----------------------------
+   FORM
+-----------------------------*/
+.rebate-form {
+  flex: 1; /* Grows to fill central space */
+  max-width: 500px; /* Limits form width for readability */
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Card-like shadow */
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 300px; /* Ensures form doesn't shrink too much */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+label {
+  font-weight: 500;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  color: #444;
+}
+
+input,
+select {
+  padding: 14px 16px;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  background: #ffffff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* ----------------------------
+   BUTTON
+-----------------------------*/
+button {
+  margin-top: 22px;
+  padding: 15px;
+  background: linear-gradient(135deg, #007bff, #00bfa6);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: clamp(1rem, 3.8vw, 1.1rem);
+  transition: all 0.3s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space for icon */
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0062cc, #00a58d);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* ----------------------------
+   RESULTS SECTION
+-----------------------------*/
+.summary {
+  background: #f9fafc;
+  padding: clamp(18px, 4vw, 24px);
+  border-radius: 12px;
+  border: 1px solid #e4e6eb;
+  margin-top: 25px;
+  overflow-x: auto;
+}
+
+.summary p {
+  margin: 8px 0;
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  word-wrap: break-word;
+}
+
+.summary strong {
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.summary hr {
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  margin: 14px 0;
+}
+
+.summary h2 {
+  color: #00bfa6;
+  margin-top: 20px;
+  font-size: clamp(1.2rem, 4vw, 1.4rem);
+}
+
+.summary h3 {
+  color: #007bff;
+}
+
+/* ----------------------------
+   LINKS
+-----------------------------*/
+a {
+  display: inline-block;
+  margin-top: 30px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  text-align: center;
+  width: 100%;
+}
+
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* ----------------------------
+   ERROR MESSAGE
+-----------------------------*/
+.error {
+  color: #d9534f;
+  background: #fef2f2;
+  border: 1px solid #f5c2c0;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+}
+
+/* ----------------------------
+   SEARCHABLE DROPDOWN
+-----------------------------*/
+#account_search {
+  padding: 12px 14px;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+#account_search:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dropdown-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+}
+
+.dropdown-list div {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-list div:hover {
+  background-color: #f0f8ff;
+}
+
+.dropdown-list div:last-child {
+  border-bottom: none;
+}
+
+/* REGION DROPDOWN */
+#region {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #333;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23999' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+#region:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+#region option {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* ----------------------------
+   RESPONSIVE BREAKPOINTS
+-----------------------------*/
+@media (max-width: 768px) {
+  .container {
+    width: 94%;
+    max-width: 100%; /* Full width on tablet/mobile */
+    margin-top: -20px;
+    padding: 28px 22px;
+  }
+
+  .form-gif-wrapper {
+    flex-direction: column; /* Stack vertically: GIF > Form > GIF */
+    align-items: center;
+    gap: 20px;
+  }
+
+  .gif-side {
+    flex: 0 0 120px; /* Smaller GIFs on mobile */
+    max-width: 120px;
+  }
+
+  .rebate-form {
+    max-width: 100%;
+    padding: 25px;
+    min-width: auto;
+  }
+
+  header {
+    padding: 28px 12px 36px;
+  }
+
+  button {
+    padding: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0 8px;
+    font-size: 0.95rem;
+  }
+
+  .container {
+    width: 100%;
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+
+  .gif-side {
+    display: none; /* Hide GIFs on very small screens to save space */
+  }
+
+  .rebate-form {
+    padding: 20px;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 0.95rem;
+    padding: 12px 14px;
+  }
+
+  .summary {
+    padding: 16px;
+  }
+
+  .dropdown-list {
+    max-height: 150px; /* Smaller dropdown on tiny screens */
+  }
+}
+
+/* ----------------------------
+   MOBILE SAFE AREA (iPhone)
+-----------------------------*/
+@supports (padding: max(0px)) {
+  body {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Rebate Result</title>
+
+    <!-- Google Fonts + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2d5d6adcb.js" crossorigin="anonymous"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <h1><i class="fas fa-chart-line"></i> Rebate Result</h1>
+        <p>Here’s the detailed computation of your rebate</p>
+    </header>
+
+    <div class="container">
+        {% if error %}
+        <div class="error">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Calculator</a>
+
+        {% elif result %}
+        <h2><i class="fas fa-receipt"></i> Rebate Calculation Summary</h2>
+
+        <div class="summary">
+            <p><strong><i class="fas fa-map-marker-alt"></i> Region:</strong> {{ region|capitalize }}</p>
+            <p><strong><i class="fas fa-user"></i> Subscriber:</strong> {{ subscriber_name }}</p>
+            <p><strong><i class="fas fa-hashtag"></i> Account Number:</strong> {{ account_number }}</p>
+            <hr>
+            <p><strong><i class="fas fa-money-bill-wave"></i> Monthly Fee:</strong> ₱{{ monthly_fee }}</p>
+            <p><strong><i class="fas fa-clock"></i> Downtime Period:</strong> {{ start_time }} → {{ end_time }}</p>
+            <hr>
+            <p><strong>Daily Rate:</strong> ₱{{ result.daily_rate }}</p>
+            <p><strong>Hourly Rate:</strong> ₱{{ result.hourly_rate }}</p>
+            <hr>
+            <p><strong>Full Days:</strong> {{ result.full_days }} day(s)</p>
+            <p><strong>Partial Start Hours:</strong> {{ result.partial_start_hours }} hour(s)</p>
+            <p><strong>Partial End Hours:</strong> {{ result.partial_end_hours }} hour(s)</p>
+            <hr>
+            <p><strong>Rebate (Partial Start):</strong> ₱{{ result.rebate_partial_start }}</p>
+            <p><strong>Rebate (Full Days):</strong> ₱{{ result.rebate_full_days }}</p>
+            <p><strong>Rebate (Partial End):</strong> ₱{{ result.rebate_partial_end }}</p>
+            <hr>
+            <h2 style="color:#007bff;"><i class="fas fa-coins"></i> Total Rebate: ₱{{ result.total_rebate }}</h2>
+            <h3 style="color:#00bfa6;">Rounded Total: ₱{{ result.total_rebate_rounded }}</h3>
+        </div>
+
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Calculator</a>
+
+        {% else %}
+        <div class="error">
+            <i class="fas fa-info-circle"></i> No data found.
+        </div>
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Calculator</a>
+        {% endif %}
+    </div>
+</body>
+
+</html>

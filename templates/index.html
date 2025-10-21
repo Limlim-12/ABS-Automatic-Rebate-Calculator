@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Rebate Calculator</title>
+
+    <!-- Google Fonts + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2d5d6adcb.js" crossorigin="anonymous"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <h1><i class="fas fa-calculator"></i> Rebate Calculator</h1>
+        <p>Quickly compute rebates based on service downtime</p>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <h2>Automatic Rebate Form</h2>
+
+        <!-- Flex Wrapper: Left GIF, Form, Right GIF -->
+        <div class="form-gif-wrapper">
+
+            <!-- Left GIF -->
+            <div class="gif-side left-gif">
+                <img src="{{ url_for('static', filename='penguin.gif') }}" alt="Left Dancing GIF" loading="lazy">
+            </div>
+
+            <!-- Form in the middle -->
+            <form method="POST" class="rebate-form"> <!-- Removed 'form-center' class -->
+
+                <!-- Region Selection -->
+                <label for="region">Select Region:</label>
+                <select name="region" id="region" required>
+                    <option value="" disabled selected>Choose region</option>
+                    {% for region_key in subscribers.keys() %}
+                    <option value="{{ region_key }}">{{ region_key|capitalize }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Searchable Account Dropdown -->
+                <label for="account_search">Select Account:</label>
+                <div class="dropdown-container">
+                    <input type="text" id="account_search" class="dropdown-input"
+                        placeholder="Type account number or name" autocomplete="off" required>
+                    <div class="dropdown-list" id="account_list"></div>
+                </div>
+                <input type="hidden" name="account_number" id="account_hidden">
+
+                <!-- Monthly Fee -->
+                <label for="monthly_fee">Monthly Fee (₱):</label>
+                <input type="number" step="0.01" id="monthly_fee" name="monthly_fee"
+                    placeholder="Enter your monthly plan amount" required>
+
+                <!-- Downtime Start -->
+                <label for="start_time">Downtime Start:</label>
+                <input type="datetime-local" id="start_time" name="start_time" required>
+
+                <!-- Downtime End -->
+                <label for="end_time">Downtime End:</label>
+                <input type="datetime-local" id="end_time" name="end_time" required>
+
+                <button type="submit">
+                    <i class="fas fa-play-circle"></i> Calculate Rebate
+                </button>
+            </form>
+
+            <!-- Right GIF -->
+            <div class="gif-side right-gif">
+                <img src="{{ url_for('static', filename='penguin.gif') }}" alt="Right Dancing GIF" loading="lazy">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT: Dynamic Searchable Account (unchanged) -->
+    <script>
+        const subscribers = {{ subscribers| tojson }};
+        const regionSelect = document.getElementById('region');
+        const accountSearch = document.getElementById('account_search');
+        const accountList = document.getElementById('account_list');
+        const accountHidden = document.getElementById('account_hidden');
+        const monthlyFeeInput = document.getElementById('monthly_fee');
+
+        let accounts = [];
+
+        function populateAccounts(region) {
+            accounts = [];
+            if (subscribers[region]) {
+                Object.keys(subscribers[region]).forEach(acc => {
+                    accounts.push({
+                        value: acc,
+                        text: `${acc} - ${subscribers[region][acc].name}`,
+                        fee: subscribers[region][acc].monthly_fee
+                    });
+                });
+            }
+            accountSearch.value = '';
+            accountHidden.value = '';
+            monthlyFeeInput.value = '';
+            accountList.innerHTML = '';
+        }
+
+        regionSelect.addEventListener('change', () => {
+            populateAccounts(regionSelect.value);
+            accountList.style.display = 'none';
+        });
+
+        accountSearch.addEventListener('input', () => {
+            const searchTerm = accountSearch.value.toLowerCase();
+            accountList.innerHTML = '';
+            const filtered = accounts.filter(a => a.text.toLowerCase().includes(searchTerm));
+            filtered.forEach(a => {
+                const div = document.createElement('div');
+                div.textContent = a.text;
+                div.dataset.value = a.value;
+                div.dataset.fee = a.fee;
+                div.addEventListener('click', () => {
+                    accountSearch.value = a.text;
+                    accountHidden.value = a.value;
+                    monthlyFeeInput.value = a.fee;
+                    accountList.style.display = 'none';
+                });
+                accountList.appendChild(div);
+            });
+            accountList.style.display = filtered.length ? 'block' : 'none';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-container')) {
+                accountList.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
