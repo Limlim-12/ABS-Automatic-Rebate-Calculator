@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from rebate_calculator import calculate_rebate
+from rebate_calculator import calculate_rebate, parse_datetime  # <-- Use this import
 from datetime import datetime
 import json
 
